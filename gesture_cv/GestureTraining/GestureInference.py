@@ -1,11 +1,8 @@
-#use python GestureInference.py
-
 import cv2
 import mediapipe as mp
 import numpy as np
 import joblib
 import time
-import os
 
 # --- paths relative to this file ---
 MODEL_PATH   = "../GestureData/gesture_classifier.joblib"
@@ -26,10 +23,42 @@ hands = mp_hands.Hands(
 
 cap = cv2.VideoCapture(0)
 
-last_prediction = None          # last raw predicted class label
-stable_prediction = None        # the one we "trust"
+# maps gesture labels -> drone commands
+COMMAND_MAP = {
+    # Pitch (move forward/back)
+    "Thumb_Up":          "PITCH_FORWARD",
+    "Thumb_Down":        "PITCH_BACKWARD",
+
+    # Throttle (vertical motion)
+    "Pointing_Up":       "THROTTLE_UP",
+    "Pointing_Down":     "THROTTLE_DOWN",
+
+    # Yaw (rotate left/right)
+    "Thumb_Left":        "YAW_LEFT",
+    "Thumb_Right":       "YAW_RIGHT",
+
+    # Roll (bank left/right)
+    "Palm_Left":         "ROLL_LEFT",
+    "Palm_Right":        "ROLL_RIGHT",
+
+    # Speed control
+    "Victory":           "SPEED_UP",
+    "Victory_Inverted":  "SPEED_DOWN",
+
+    # Hover / hold position
+    "Open_Palm":         "HOLD_POSITION",
+    "Stop_Palm":         "HOLD_POSITION",  # legacy label you collected earlier
+
+    # Emergency
+    "Closed_Fist":       "KILL"
+}
+
+last_prediction = None        # most recent raw gesture label (frame-level)
+stable_prediction = None      # gesture after stability filter
 same_count = 0
-STABILITY_FRAMES = 5            # require N consistent frames before we accept
+STABILITY_FRAMES = 5          # how many consistent frames before we "lock" it
+
+active_command = "NONE"       # what we're currently showing on screen
 
 print("Press 'q' to quit.")
 
@@ -38,29 +67,32 @@ while cap.isOpened():
     if not ok:
         break
 
+    # flip horizontally so it behaves like a mirror
     frame = cv2.flip(frame, 1)
+
+    # MediaPipe expects RGB
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = hands.process(rgb)
 
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
-            # draw landmarks on the preview
+            # draw skeleton
             mp_drawing.draw_landmarks(
                 frame,
                 hand_landmarks,
                 mp_hands.HAND_CONNECTIONS
             )
 
-            # same feature extraction you used for training:
+            # extract same 63-dim feature vector we trained on
             landmarks = np.array(
                 [[lm.x, lm.y, lm.z] for lm in hand_landmarks.landmark]
             ).flatten().reshape(1, -1)
 
-            # model -> class index -> human label
+            # classifier -> index -> label string
             class_idx = clf.predict(landmarks)[0]
             class_label = le.inverse_transform([class_idx])[0]
 
-            # temporal smoothing so commands don't flicker
+            # temporal smoothing so we don't flicker
             if class_label == last_prediction:
                 same_count += 1
             else:
@@ -70,7 +102,12 @@ while cap.isOpened():
             if same_count >= STABILITY_FRAMES:
                 stable_prediction = class_label
 
-            # overlay text
+            # figure out the command based on the STABLE prediction
+            if stable_prediction:
+                mapped_command = COMMAND_MAP.get(stable_prediction, "UNKNOWN")
+                active_command = mapped_command  # update what we overlay
+
+            # overlay text: live gesture
             cv2.putText(
                 frame,
                 f"live: {class_label}",
@@ -80,6 +117,8 @@ while cap.isOpened():
                 (0,255,0),
                 2
             )
+
+            # overlay text: stable gesture
             if stable_prediction:
                 cv2.putText(
                     frame,
@@ -91,9 +130,21 @@ while cap.isOpened():
                     2
                 )
 
-    cv2.imshow("Realtime Gesture Prediction", frame)
+    # overlay the active command (even if no hand in frame right now, show last known)
+    cv2.putText(
+        frame,
+        f"COMMAND: {active_command}",
+        (10, 110),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        1,
+        (0,0,255),
+        2
+    )
 
-    # quit
+    # show window
+    cv2.imshow("Realtime Gesture Control", frame)
+
+    # quit key
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
