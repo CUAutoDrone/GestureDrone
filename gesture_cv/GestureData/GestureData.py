@@ -1,4 +1,4 @@
-#use "python main.py"
+#use "python GestureCollection.py"
 
 import cv2
 import mediapipe as mp
