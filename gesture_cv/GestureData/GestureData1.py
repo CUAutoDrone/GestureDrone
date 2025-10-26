@@ -1,4 +1,7 @@
-#use "python GestureCollection.py"
+#use "python GestureData1.py"
+
+#This file collects data for non pre-implemented gestures
+#Two data files will be merged
 
 import cv2
 import mediapipe as mp
@@ -17,7 +20,7 @@ GESTURE_LABELS = [
     "Stop_Palm",
     "Closed_Fist"
 ]
-SAVE_PATH = "gesture_data.csv"
+SAVE_PATH = "gesture_data1.csv"
 
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
