@@ -16,7 +16,7 @@ ys = []
 
 with open(CSV_PATH, 'r') as f:
     reader = csv.reader(f)
-    header = next(reader)  # skip first row
+    next(reader)  # skip first row
     for row in reader:
         *features, label = row
         Xs.append([float(v) for v in features])

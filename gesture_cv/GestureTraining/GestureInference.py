@@ -2,7 +2,6 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import joblib
-import time
 
 # --- paths relative to this file ---
 MODEL_PATH   = "../GestureData/gesture_classifier.joblib"
