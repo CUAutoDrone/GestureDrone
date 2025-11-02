@@ -55,15 +55,25 @@ class FlightController(Node):
         elif cmd == "HOLD_POSITION":
             self.get_logger().info("Holding position.")
         #need to finish kill
+        #did we define current pose? is this line needed?
+            if hasattr(self, 'current_pose'):
+                self.pose_pub.publish(self.current_pose)
+            else:
+                self.get_logger().warn("No current pose available yet, cannot hold position.")
+            
         elif cmd == "KILL":
             self.get_logger().warn("Emergency stop triggered!")
 
-        #need to finish speeding up and down
+        #need to finish decide on increment factor of speed (whether 0.1 or higher)
+        #also define helper attribute: self.max_speed (what is maximum allowed speed)
         elif cmd == "SPEED_UP":
-            pass
-        
+            self.speed_factor = min(self.speed_factor + 0.1, self.max_speed) #
+            self.get_logger().info(f"Speed increased → {self.speed_factor:.1f}x")
+        #need to finish decide on decrement factor of speed (whether 0.1 or higher)
+        # define helper attribute: self.min_speed (what is minimum allowed speed)
         elif cmd == "SPEED_DOWN":
-            pass
+            self.speed_factor = max(self.speed_factor - 0.1, self.min_speed)
+            self.get_logger().info(f"Speed decreased → {self.speed_factor:.1f}x")
 
     def bank(self, angle_deg, direction):
         angle_rad = math.radians(angle_deg if direction == "RIGHT" else -angle_deg)
