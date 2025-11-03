@@ -17,7 +17,6 @@ from std_msgs.msg import String
 from geometry_msgs.msg import PoseStamped
 import tf_transformations
 import math
-import time
 
 
 class FlightController(Node):
