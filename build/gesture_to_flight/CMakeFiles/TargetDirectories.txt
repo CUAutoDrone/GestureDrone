@@ -1,0 +1,10 @@
+GestureDrone/build/gesture_to_flight/CMakeFiles/uninstall.dir
+GestureDrone/build/gesture_to_flight/CMakeFiles/gesture_to_flight_uninstall.dir
+GestureDrone/build/gesture_to_flight/CMakeFiles/flight_instructions.dir
+GestureDrone/build/gesture_to_flight/CMakeFiles/test.dir
+GestureDrone/build/gesture_to_flight/CMakeFiles/edit_cache.dir
+GestureDrone/build/gesture_to_flight/CMakeFiles/rebuild_cache.dir
+GestureDrone/build/gesture_to_flight/CMakeFiles/list_install_components.dir
+GestureDrone/build/gesture_to_flight/CMakeFiles/install.dir
+GestureDrone/build/gesture_to_flight/CMakeFiles/install/local.dir
+GestureDrone/build/gesture_to_flight/CMakeFiles/install/strip.dir
