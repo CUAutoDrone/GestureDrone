@@ -6,9 +6,12 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report
 import joblib  # to save the trained model
 
-CSV_PATH = "../GestureData/gesture_data_full.csv"
-MODEL_PATH = "../GestureData/gesture_classifier.joblib"
-ENCODER_PATH = "../GestureData/label_encoder.joblib"
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.path.join(BASE_DIR, "../GestureData/gesture_data_full.csv")
+MODEL_PATH = os.path.join(BASE_DIR, "../GestureData/gesture_classifier.joblib")
+ENCODER_PATH = os.path.join(BASE_DIR, "../GestureData/label_encoder.joblib")
 
 # 1. load data
 Xs = []
