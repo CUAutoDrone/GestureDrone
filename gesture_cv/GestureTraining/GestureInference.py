@@ -4,6 +4,7 @@ import numpy as np
 import joblib
 
 '''
+cd ~/Desktop/CUAD/GestureDrone
 cd gesture_cv/GestureTraining
 python GestureInference.py
 '''
