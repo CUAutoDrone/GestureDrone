@@ -3,9 +3,17 @@ import mediapipe as mp
 import numpy as np
 import joblib
 
-# --- paths relative to this file ---
-MODEL_PATH   = "../GestureData/gesture_classifier.joblib"
-ENCODER_PATH = "../GestureData/label_encoder.joblib"
+'''
+cd ~/Desktop/CUAD/GestureDrone
+cd gesture_cv/GestureTraining
+python GestureInference.py
+'''
+
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "../GestureData/gesture_classifier.joblib")
+ENCODER_PATH = os.path.join(BASE_DIR, "../GestureData/label_encoder.joblib")
 
 # load trained model + label encoder
 clf = joblib.load(MODEL_PATH)
