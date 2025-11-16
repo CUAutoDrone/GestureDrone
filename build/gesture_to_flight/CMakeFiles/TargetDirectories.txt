@@ -1,0 +1,10 @@
+/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight/CMakeFiles/uninstall.dir
+/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight/CMakeFiles/gesture_to_flight_uninstall.dir
+/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight/CMakeFiles/flight_instructions.dir
+/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight/CMakeFiles/test.dir
+/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight/CMakeFiles/edit_cache.dir
+/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight/CMakeFiles/rebuild_cache.dir
+/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight/CMakeFiles/list_install_components.dir
+/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight/CMakeFiles/install.dir
+/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight/CMakeFiles/install/local.dir
+/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight/CMakeFiles/install/strip.dir

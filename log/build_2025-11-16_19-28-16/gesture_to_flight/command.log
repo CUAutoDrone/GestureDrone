@@ -1,0 +1,1 @@
+Invoking command in '/home/ubuntu/Downloads/GestureDrone/build/gesture_to_flight': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/Downloads/HandGestureTest/install/my_py_pkg:/opt/ros/humble /usr/bin/cmake /home/ubuntu/Downloads/GestureDrone/gesture_to_flight -DCMAKE_INSTALL_PREFIX=/home/ubuntu/Downloads/GestureDrone/install/gesture_to_flight

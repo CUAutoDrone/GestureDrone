@@ -1,0 +1,16 @@
+/home/ubuntu/.local/lib/python3.10/site-packages/setuptools/_distutils/dist.py:289: UserWarning: Unknown distribution option: 'tests_require'
+  warnings.warn(msg)
+running egg_info
+creating ../build/gesture_cv/gesture_cv.egg-info
+writing ../build/gesture_cv/gesture_cv.egg-info/PKG-INFO
+writing dependency_links to ../build/gesture_cv/gesture_cv.egg-info/dependency_links.txt
+writing requirements to ../build/gesture_cv/gesture_cv.egg-info/requires.txt
+writing top-level names to ../build/gesture_cv/gesture_cv.egg-info/top_level.txt
+writing manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'
+reading manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'
+writing manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'
+running build
+running install
+running install_data
+creating /home/ubuntu/Downloads/GestureDrone/install/gesture_cv/share/ament_index/resource_index/packages
+error: can't copy 'resource/gesture_cv': doesn't exist or not a regular file

@@ -1,0 +1,18 @@
+[0.451s] Invoking command in '/home/ubuntu/Downloads/GestureDrone/gesture_cv': PYTHONPATH=/home/ubuntu/Downloads/GestureDrone/build/gesture_cv/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ubuntu/Downloads/GestureDrone/install/gesture_cv/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/gesture_cv build --build-base /home/ubuntu/Downloads/GestureDrone/build/gesture_cv/build install --record /home/ubuntu/Downloads/GestureDrone/build/gesture_cv/install.log --single-version-externally-managed install_data
+[0.562s] /home/ubuntu/.local/lib/python3.10/site-packages/setuptools/_distutils/dist.py:289: UserWarning: Unknown distribution option: 'tests_require'
+[0.562s]   warnings.warn(msg)
+[0.614s] running egg_info
+[0.625s] creating ../build/gesture_cv/gesture_cv.egg-info
+[0.625s] writing ../build/gesture_cv/gesture_cv.egg-info/PKG-INFO
+[0.625s] writing dependency_links to ../build/gesture_cv/gesture_cv.egg-info/dependency_links.txt
+[0.625s] writing requirements to ../build/gesture_cv/gesture_cv.egg-info/requires.txt
+[0.625s] writing top-level names to ../build/gesture_cv/gesture_cv.egg-info/top_level.txt
+[0.625s] writing manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'
+[0.635s] reading manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'
+[0.635s] writing manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'
+[0.636s] running build
+[0.636s] running install
+[0.638s] running install_data
+[0.638s] creating /home/ubuntu/Downloads/GestureDrone/install/gesture_cv/share/ament_index/resource_index/packages
+[0.639s] error: can't copy 'resource/gesture_cv': doesn't exist or not a regular file
+[0.653s] Invoked command in '/home/ubuntu/Downloads/GestureDrone/gesture_cv' returned '1': PYTHONPATH=/home/ubuntu/Downloads/GestureDrone/build/gesture_cv/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ubuntu/Downloads/GestureDrone/install/gesture_cv/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/gesture_cv build --build-base /home/ubuntu/Downloads/GestureDrone/build/gesture_cv/build install --record /home/ubuntu/Downloads/GestureDrone/build/gesture_cv/install.log --single-version-externally-managed install_data

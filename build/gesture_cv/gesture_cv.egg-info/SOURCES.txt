@@ -1,0 +1,12 @@
+package.xml
+setup.cfg
+setup.py
+../build/gesture_cv/gesture_cv.egg-info/PKG-INFO
+../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt
+../build/gesture_cv/gesture_cv.egg-info/dependency_links.txt
+../build/gesture_cv/gesture_cv.egg-info/requires.txt
+../build/gesture_cv/gesture_cv.egg-info/top_level.txt
+../build/gesture_cv/gesture_cv.egg-info/zip-safe
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py
