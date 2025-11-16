@@ -3,6 +3,11 @@ import mediapipe as mp
 import numpy as np
 import joblib
 
+'''
+cd gesture_cv/GestureTraining
+python GestureInference.py
+'''
+
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
