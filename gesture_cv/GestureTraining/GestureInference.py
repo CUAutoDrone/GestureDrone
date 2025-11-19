@@ -4,7 +4,7 @@ import numpy as np
 import joblib
 
 '''
-cd GestureDrone
+cd to cloned repo (e.g. cd GestureDrone)
 cd gesture_cv/GestureTraining
 python GestureInference.py
 '''
