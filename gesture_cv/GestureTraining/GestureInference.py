@@ -20,9 +20,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "../GestureData/gesture_classifier.pt")
 LABEL_MAP_PATH = os.path.join(BASE_DIR, "../GestureData/label_map.json")
 
-# -------------------------
-# Load label list
-# -------------------------
+
 with open(LABEL_MAP_PATH, "r") as f:
     LABELS = json.load(f)  # list: idx -> label string
 num_classes = len(LABELS)
