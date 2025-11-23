@@ -1,62 +1,134 @@
 import csv
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
-from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import classification_report
-import joblib  # to save the trained model
-
+import json
 import os
 
+import numpy as np
+import torch
+import torch.nn as nn
+from torch.utils.data import TensorDataset, DataLoader
+
+#get into /GestureTraining and run python3 GestureTraining.py
+
+# -------------------------
+# Paths
+# -------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH = os.path.join(BASE_DIR, "../GestureData/gesture_data_full.csv")
-MODEL_PATH = os.path.join(BASE_DIR, "../GestureData/gesture_classifier.joblib")
-ENCODER_PATH = os.path.join(BASE_DIR, "../GestureData/label_encoder.joblib")
+MODEL_PATH = os.path.join(BASE_DIR, "../GestureData/gesture_classifier.pt")
+LABEL_MAP_PATH = os.path.join(BASE_DIR, "../GestureData/label_map.json")
 
-# 1. load data
+# -------------------------
+# Load CSV
+# -------------------------
 Xs = []
 ys = []
 
-with open(CSV_PATH, 'r') as f:
+with open(CSV_PATH, "r") as f:
     reader = csv.reader(f)
-    next(reader)  # skip first row
+    next(reader)  # skip header
     for row in reader:
         *features, label = row
         Xs.append([float(v) for v in features])
         ys.append(label)
 
-X = np.array(Xs)           # shape (N, 63)
-y_text = np.array(ys)      # shape (N,)
+X = np.asarray(Xs, dtype=np.float32)  # (N, 63)
+y_text = np.asarray(ys)               # (N,)
 
-# 2. turn string labels ("Thumb_Left", etc.) into integers (0,1,2,...)
-le = LabelEncoder()
-y = le.fit_transform(y_text)
+# -------------------------
+# Build label index mapping
+# -------------------------
+labels = sorted(set(y_text.tolist()))
+label_to_index = {lab: i for i, lab in enumerate(labels)}
+num_classes = len(labels)
 
-# 3. train/val split
-X_train, X_val, y_train, y_val = train_test_split(
-    X,
-    y,
-    test_size=0.2,
-    stratify=y,
-    random_state=42
-)
+y = np.array([label_to_index[lab] for lab in y_text], dtype=np.int64)
 
-# 4. define model
-clf = MLPClassifier(
-    hidden_layer_sizes=(128, 64),
-    activation='relu',
-    max_iter=500
-)
+print(f"Loaded {len(X)} samples, {num_classes} gesture classes.")
+print("Classes:", labels)
 
-# 5. train
-clf.fit(X_train, y_train)
+# Save label list for inference
+with open(LABEL_MAP_PATH, "w") as f:
+    json.dump(labels, f)
+print(f"Saved label map to {LABEL_MAP_PATH}")
 
-# 6. evaluate
-y_pred = clf.predict(X_val)
-print(classification_report(y_val, y_pred, target_names=le.classes_))
+# -------------------------
+# Train/val split (manual, no sklearn)
+# -------------------------
+rng = np.random.default_rng(seed=42)
+indices = np.arange(len(X))
+rng.shuffle(indices)
 
-# 7. save model + encoder for runtime use
-joblib.dump(clf, MODEL_PATH)
-joblib.dump(le, ENCODER_PATH)
-print(f"Saved model to {MODEL_PATH}")
-print(f"Saved label encoder to {ENCODER_PATH}")
+split_idx = int(0.8 * len(X))
+train_idx = indices[:split_idx]
+val_idx = indices[split_idx:]
+
+X_train = torch.tensor(X[train_idx], dtype=torch.float32)
+y_train = torch.tensor(y[train_idx], dtype=torch.long)
+X_val = torch.tensor(X[val_idx], dtype=torch.float32)
+y_val = torch.tensor(y[val_idx], dtype=torch.long)
+
+train_ds = TensorDataset(X_train, y_train)
+val_ds = TensorDataset(X_val, y_val)
+
+train_loader = DataLoader(train_ds, batch_size=32, shuffle=True)
+val_loader = DataLoader(val_ds, batch_size=64, shuffle=False)
+
+# -------------------------
+# Model definition
+# -------------------------
+class GestureNet(nn.Module):
+    def __init__(self, input_dim=63, num_classes=num_classes):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(input_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, num_classes)
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+model = GestureNet()
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+
+# -------------------------
+# Training loop
+# -------------------------
+EPOCHS = 40
+
+def evaluate(model, loader):
+    model.eval()
+    correct = 0
+    total = 0
+    with torch.no_grad():
+        for xb, yb in loader:
+            logits = model(xb)
+            preds = torch.argmax(logits, dim=1)
+            correct += (preds == yb).sum().item()
+            total += yb.numel()
+    model.train()
+    return correct / max(total, 1)
+
+for epoch in range(1, EPOCHS + 1):
+    running_loss = 0.0
+    for xb, yb in train_loader:
+        optimizer.zero_grad()
+        logits = model(xb)
+        loss = criterion(logits, yb)
+        loss.backward()
+        optimizer.step()
+        running_loss += loss.item() * xb.size(0)
+
+    train_loss = running_loss / len(train_ds)
+    val_acc = evaluate(model, val_loader)
+    print(f"Epoch {epoch:02d}/{EPOCHS}  "
+          f"Train Loss: {train_loss:.4f}  Val Acc: {val_acc:.3f}")
+
+# -------------------------
+# Save model
+# -------------------------
+torch.save(model.state_dict(), MODEL_PATH)
+print(f"Saved PyTorch model to {MODEL_PATH}")
