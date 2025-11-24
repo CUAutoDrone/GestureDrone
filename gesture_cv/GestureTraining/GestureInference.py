@@ -10,7 +10,7 @@ import torch
 import torch.nn as nn
 #pip install opencv-python mediapipe numpy
 
-#get into /GestureTraining and run python3 GestureInference.py
+#get into GestureTraining/ and run python3 GestureInference.py
 
 
 # -------------------------
