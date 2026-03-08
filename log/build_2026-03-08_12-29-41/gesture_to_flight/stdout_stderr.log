@@ -1,0 +1,18 @@
+running egg_info
+creating ../build/gesture_to_flight/gesture_to_flight.egg-info
+writing ../build/gesture_to_flight/gesture_to_flight.egg-info/PKG-INFO
+writing dependency_links to ../build/gesture_to_flight/gesture_to_flight.egg-info/dependency_links.txt
+writing entry points to ../build/gesture_to_flight/gesture_to_flight.egg-info/entry_points.txt
+writing requirements to ../build/gesture_to_flight/gesture_to_flight.egg-info/requires.txt
+writing top-level names to ../build/gesture_to_flight/gesture_to_flight.egg-info/top_level.txt
+writing manifest file '../build/gesture_to_flight/gesture_to_flight.egg-info/SOURCES.txt'
+reading manifest file '../build/gesture_to_flight/gesture_to_flight.egg-info/SOURCES.txt'
+writing manifest file '../build/gesture_to_flight/gesture_to_flight.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/etienne/GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight
+copying gesture_to_flight/gesture_inference_ros_node.py -> /home/etienne/GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight
+copying gesture_to_flight/__init__.py -> /home/etienne/GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight
+copying gesture_to_flight/flightInstructions.py -> /home/etienne/GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight
+running install
+error: error in setup.cfg: command 'install' has no such option 'script_dir'

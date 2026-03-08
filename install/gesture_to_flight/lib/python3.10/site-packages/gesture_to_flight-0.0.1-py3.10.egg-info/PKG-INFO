@@ -1,0 +1,11 @@
+Metadata-Version: 2.1
+Name: gesture_to_flight
+Version: 0.0.1
+Summary: ROS 2 package for gesture-based drone flight control
+Maintainer: etienne
+Maintainer-email: etiennesasenarine@gmail.com
+License: TODO: License declaration
+Requires-Dist: setuptools
+Requires-Dist: rclpy
+Requires-Dist: std_msgs
+Requires-Dist: geometry_msgs

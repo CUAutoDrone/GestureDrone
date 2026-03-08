@@ -28,13 +28,19 @@ class FlightController(Node):
 
         self.pos_pub = self.create_publisher(PoseStamped, '/mavros/setpoint_position/local', 10)
         self.current_pose = PoseStamped()
+        
+        # Speed control parameters
+        self.speed_factor = 1.0
+        self.max_speed = 2.0
+        self.min_speed = 0.1
+        
         self.get_logger().info("FlightController ready and listening to gestures")
 
     def command_callback(self, msg):
         cmd = msg.data
         self.get_logger().info(f"Received command: {cmd}")
         if cmd == "PITCH_FORWARD":
-            self.pmove_increment(10, 0, 0)
+            self.move_increment(10, 0, 0)
         elif cmd == "PITCH_BACKWARD":
             self.move_increment(-10, 0, 0)
         elif cmd == "ROLL_LEFT":
@@ -50,13 +56,12 @@ class FlightController(Node):
         elif cmd == "YAW_RIGHT":
             self.yaw(90, "RIGHT")
 
-        #need to finish hovering
+        #hold position by republishing current pose
         elif cmd == "HOLD_POSITION":
             self.get_logger().info("Holding position.")
-        #need to finish kill
-        #did we define current pose? is this line needed?
-            if hasattr(self, 'current_pose'):
-                self.pose_pub.publish(self.current_pose)
+            if hasattr(self, 'current_pose') and self.current_pose.pose.position.x != 0:
+                self.current_pose.header.stamp = self.get_clock().now().to_msg()
+                self.pos_pub.publish(self.current_pose)
             else:
                 self.get_logger().warn("No current pose available yet, cannot hold position.")
             
@@ -89,6 +94,8 @@ class FlightController(Node):
         new_pose.pose.orientation.z = q[2]
         new_pose.pose.orientation.w = q[3]
 
+        
+        self.pos_pub.publish(new_pose)
 
     def yaw(self, angle_deg, direction):
         angle_rad = math.radians(angle_deg if direction == "RIGHT" else -angle_deg)
@@ -104,17 +111,24 @@ class FlightController(Node):
         new_pose.pose.orientation.y = q[1]
         new_pose.pose.orientation.z = q[2]
         new_pose.pose.orientation.w = q[3]
+        
+        self.pos_pub.publish(new_pose)
 
     def move_increment(self, x, y, z):
         new_loc = PoseStamped()
         new_loc.header.stamp = self.get_clock().now().to_msg()
-        new_loc.pose.position.x = self.current_pose.pose.position.x + x
-        new_loc.pose.position.y = self.current_pose.pose.position.y + y
-        new_loc.pose.position.z = self.current_pose.pose.position.z + z
+        # Apply speed factor to movements
+        scaled_x = x * self.speed_factor
+        scaled_y = y * self.speed_factor
+        scaled_z = z * self.speed_factor
+        
+        new_loc.pose.position.x = self.current_pose.pose.position.x + scaled_x
+        new_loc.pose.position.y = self.current_pose.pose.position.y + scaled_y
+        new_loc.pose.position.z = self.current_pose.pose.position.z + scaled_z
 
         new_loc.pose.orientation = self.current_pose.pose.orientation
         self.pos_pub.publish(new_loc)
-        self.get_logger().info(f"Moving drone to ({x}, {y}, {z})")
+        self.get_logger().info(f"Moving drone by ({scaled_x}, {scaled_y}, {scaled_z})")
 
     def pose_callback(self, msg):
         self.current_pose = msg

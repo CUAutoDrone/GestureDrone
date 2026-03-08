@@ -1,0 +1,16 @@
+[0.383s] Invoking command in '/home/etienne/GestureDrone/gesture_cv': PYTHONPATH=/home/etienne/GestureDrone/build/gesture_cv/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/etienne/GestureDrone/install/gesture_cv/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/gesture_cv build --build-base /home/etienne/GestureDrone/build/gesture_cv/build install --record /home/etienne/GestureDrone/build/gesture_cv/install.log --single-version-externally-managed install_data
+[0.470s] /home/etienne/.local/lib/python3.10/site-packages/setuptools/_distutils/dist.py:261: UserWarning: Unknown distribution option: 'tests_require'
+[0.471s]   warnings.warn(msg)
+[0.511s] running egg_info
+[0.517s] writing ../build/gesture_cv/gesture_cv.egg-info/PKG-INFO
+[0.518s] writing dependency_links to ../build/gesture_cv/gesture_cv.egg-info/dependency_links.txt
+[0.518s] writing entry points to ../build/gesture_cv/gesture_cv.egg-info/entry_points.txt
+[0.518s] writing requirements to ../build/gesture_cv/gesture_cv.egg-info/requires.txt
+[0.518s] writing top-level names to ../build/gesture_cv/gesture_cv.egg-info/top_level.txt
+[0.525s] reading manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'
+[0.525s] writing manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'
+[0.525s] running build
+[0.526s] running install
+[0.529s] running install_data
+[0.529s] error: can't copy 'resource/gesture_cv': doesn't exist or not a regular file
+[0.556s] Invoked command in '/home/etienne/GestureDrone/gesture_cv' returned '1': PYTHONPATH=/home/etienne/GestureDrone/build/gesture_cv/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/etienne/GestureDrone/install/gesture_cv/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/gesture_cv build --build-base /home/etienne/GestureDrone/build/gesture_cv/build install --record /home/etienne/GestureDrone/build/gesture_cv/install.log --single-version-externally-managed install_data

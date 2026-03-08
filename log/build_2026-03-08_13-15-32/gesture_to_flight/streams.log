@@ -1,0 +1,30 @@
+[0.438s] Invoking command in '/home/etienne/GestureDrone/gesture_to_flight': PYTHONPATH=/home/etienne/GestureDrone/build/gesture_to_flight/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/etienne/GestureDrone/install/gesture_to_flight/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/gesture_to_flight build --build-base /home/etienne/GestureDrone/build/gesture_to_flight/build install --record /home/etienne/GestureDrone/build/gesture_to_flight/install.log --single-version-externally-managed install_data
+[0.574s] running egg_info
+[0.582s] writing ../build/gesture_to_flight/gesture_to_flight.egg-info/PKG-INFO
+[0.582s] writing dependency_links to ../build/gesture_to_flight/gesture_to_flight.egg-info/dependency_links.txt
+[0.582s] writing entry points to ../build/gesture_to_flight/gesture_to_flight.egg-info/entry_points.txt
+[0.582s] writing requirements to ../build/gesture_to_flight/gesture_to_flight.egg-info/requires.txt
+[0.582s] writing top-level names to ../build/gesture_to_flight/gesture_to_flight.egg-info/top_level.txt
+[0.598s] reading manifest file '../build/gesture_to_flight/gesture_to_flight.egg-info/SOURCES.txt'
+[0.599s] writing manifest file '../build/gesture_to_flight/gesture_to_flight.egg-info/SOURCES.txt'
+[0.599s] running build
+[0.599s] running build_py
+[0.599s] copying gesture_to_flight/gesture_inference_ros_node.py -> /home/etienne/GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight
+[0.600s] copying gesture_to_flight/__init__.py -> /home/etienne/GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight
+[0.600s] copying gesture_to_flight/flightInstructions.py -> /home/etienne/GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight
+[0.600s] running install
+[0.603s] running install_lib
+[0.610s] copying /home/etienne/GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight/gesture_inference_ros_node.py -> /home/etienne/GestureDrone/install/gesture_to_flight/lib/python3.10/site-packages/gesture_to_flight
+[0.611s] byte-compiling /home/etienne/GestureDrone/install/gesture_to_flight/lib/python3.10/site-packages/gesture_to_flight/gesture_inference_ros_node.py to gesture_inference_ros_node.cpython-310.pyc
+[0.612s] running install_data
+[0.612s] copying resource/gesture_to_flight -> /home/etienne/GestureDrone/install/gesture_to_flight/share/ament_index/resource_index/packages
+[0.612s] copying package.xml -> /home/etienne/GestureDrone/install/gesture_to_flight/share/gesture_to_flight
+[0.612s] copying launch/gesture_drone.launch.py -> /home/etienne/GestureDrone/install/gesture_to_flight/share/gesture_to_flight/launch
+[0.612s] running install_egg_info
+[0.621s] removing '/home/etienne/GestureDrone/install/gesture_to_flight/lib/python3.10/site-packages/gesture_to_flight-0.0.1-py3.10.egg-info' (and everything under it)
+[0.621s] Copying ../build/gesture_to_flight/gesture_to_flight.egg-info to /home/etienne/GestureDrone/install/gesture_to_flight/lib/python3.10/site-packages/gesture_to_flight-0.0.1-py3.10.egg-info
+[0.622s] running install_scripts
+[0.689s] Installing flight_controller script to /home/etienne/GestureDrone/install/gesture_to_flight/bin
+[0.689s] Installing gesture_inference script to /home/etienne/GestureDrone/install/gesture_to_flight/bin
+[0.689s] writing list of installed files to '/home/etienne/GestureDrone/build/gesture_to_flight/install.log'
+[0.706s] Invoked command in '/home/etienne/GestureDrone/gesture_to_flight' returned '0': PYTHONPATH=/home/etienne/GestureDrone/build/gesture_to_flight/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/etienne/GestureDrone/install/gesture_to_flight/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/gesture_to_flight build --build-base /home/etienne/GestureDrone/build/gesture_to_flight/build install --record /home/etienne/GestureDrone/build/gesture_to_flight/install.log --single-version-externally-managed install_data

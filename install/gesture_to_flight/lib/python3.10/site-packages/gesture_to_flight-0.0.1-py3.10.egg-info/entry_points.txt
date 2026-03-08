@@ -1,0 +1,3 @@
+[console_scripts]
+flight_controller = gesture_to_flight.flightInstructions:main
+gesture_inference = gesture_to_flight.gesture_inference_ros_node:main
