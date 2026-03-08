@@ -1,0 +1,12 @@
+source;share/gesture_to_flight/hook/path.ps1
+source;share/gesture_to_flight/hook/path.dsv
+source;share/gesture_to_flight/hook/path.sh
+source;share/gesture_to_flight/hook/pythonpath.ps1
+source;share/gesture_to_flight/hook/pythonpath.dsv
+source;share/gesture_to_flight/hook/pythonpath.sh
+source;share/gesture_to_flight/hook/pythonscriptspath.ps1
+source;share/gesture_to_flight/hook/pythonscriptspath.dsv
+source;share/gesture_to_flight/hook/pythonscriptspath.sh
+source;share/gesture_to_flight/hook/ament_prefix_path.ps1
+source;share/gesture_to_flight/hook/ament_prefix_path.dsv
+source;share/gesture_to_flight/hook/ament_prefix_path.sh

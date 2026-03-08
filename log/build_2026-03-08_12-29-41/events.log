@@ -1,0 +1,31 @@
+[0.000000] (-) TimerEvent: {}
+[0.000385] (-) JobUnselected: {'identifier': 'gesture_cv'}
+[0.000457] (gesture_to_flight) JobQueued: {'identifier': 'gesture_to_flight', 'dependencies': OrderedDict([('gesture_cv', 'GestureDrone/install/gesture_cv')])}
+[0.000489] (gesture_to_flight) JobStarted: {'identifier': 'gesture_to_flight'}
+[0.099802] (-) TimerEvent: {}
+[0.200161] (-) TimerEvent: {}
+[0.300483] (-) TimerEvent: {}
+[0.400787] (-) TimerEvent: {}
+[0.403803] (gesture_to_flight) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../build/gesture_to_flight', 'build', '--build-base', 'GestureDrone/build/gesture_to_flight/build', 'install', '--record', 'GestureDrone/build/gesture_to_flight/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': 'GestureDrone/gesture_to_flight', 'env': ***REMOVED***, 'shell': False}
+[0.500984] (-) TimerEvent: {}
+[0.543764] (gesture_to_flight) StdoutLine: {'line': b'running egg_info\n'}
+[0.551352] (gesture_to_flight) StdoutLine: {'line': b'creating ../build/gesture_to_flight/gesture_to_flight.egg-info\n'}
+[0.551995] (gesture_to_flight) StdoutLine: {'line': b'writing ../build/gesture_to_flight/gesture_to_flight.egg-info/PKG-INFO\n'}
+[0.552067] (gesture_to_flight) StdoutLine: {'line': b'writing dependency_links to ../build/gesture_to_flight/gesture_to_flight.egg-info/dependency_links.txt\n'}
+[0.552119] (gesture_to_flight) StdoutLine: {'line': b'writing entry points to ../build/gesture_to_flight/gesture_to_flight.egg-info/entry_points.txt\n'}
+[0.552165] (gesture_to_flight) StdoutLine: {'line': b'writing requirements to ../build/gesture_to_flight/gesture_to_flight.egg-info/requires.txt\n'}
+[0.552209] (gesture_to_flight) StdoutLine: {'line': b'writing top-level names to ../build/gesture_to_flight/gesture_to_flight.egg-info/top_level.txt\n'}
+[0.552262] (gesture_to_flight) StdoutLine: {'line': b"writing manifest file '../build/gesture_to_flight/gesture_to_flight.egg-info/SOURCES.txt'\n"}
+[0.567446] (gesture_to_flight) StdoutLine: {'line': b"reading manifest file '../build/gesture_to_flight/gesture_to_flight.egg-info/SOURCES.txt'\n"}
+[0.567990] (gesture_to_flight) StdoutLine: {'line': b"writing manifest file '../build/gesture_to_flight/gesture_to_flight.egg-info/SOURCES.txt'\n"}
+[0.568089] (gesture_to_flight) StdoutLine: {'line': b'running build\n'}
+[0.568137] (gesture_to_flight) StdoutLine: {'line': b'running build_py\n'}
+[0.568246] (gesture_to_flight) StdoutLine: {'line': b'creating GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight\n'}
+[0.568426] (gesture_to_flight) StdoutLine: {'line': b'copying gesture_to_flight/gesture_inference_ros_node.py -> GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight\n'}
+[0.568489] (gesture_to_flight) StdoutLine: {'line': b'copying gesture_to_flight/__init__.py -> GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight\n'}
+[0.568536] (gesture_to_flight) StdoutLine: {'line': b'copying gesture_to_flight/flightInstructions.py -> GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight\n'}
+[0.568676] (gesture_to_flight) StdoutLine: {'line': b'running install\n'}
+[0.568745] (gesture_to_flight) StderrLine: {'line': b"error: error in setup.cfg: command 'install' has no such option 'script_dir'\n"}
+[0.582331] (gesture_to_flight) CommandEnded: {'returncode': 1}
+[0.582817] (gesture_to_flight) JobEnded: {'identifier': 'gesture_to_flight', 'rc': 1}
+[0.592689] (-) EventReactorShutdown: {}

@@ -1,0 +1,29 @@
+[0.000000] (-) TimerEvent: {}
+[0.000305] (gesture_cv) JobQueued: {'identifier': 'gesture_cv', 'dependencies': OrderedDict()}
+[0.000419] (gesture_cv) JobStarted: {'identifier': 'gesture_cv'}
+[0.099498] (-) TimerEvent: {}
+[0.199932] (-) TimerEvent: {}
+[0.300337] (-) TimerEvent: {}
+[0.400715] (-) TimerEvent: {}
+[0.448737] (gesture_cv) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../build/gesture_cv', 'build', '--build-base', 'GestureDrone/build/gesture_cv/build', 'install', '--record', 'GestureDrone/build/gesture_cv/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': 'GestureDrone/gesture_cv', 'env': ***REMOVED***, 'shell': False}
+[0.500803] (-) TimerEvent: {}
+[0.536260] (gesture_cv) StderrLine: {'line': b"site-packages/setuptools/_distutils/dist.py:261: UserWarning: Unknown distribution option: 'tests_require'\n"}
+[0.536511] (gesture_cv) StderrLine: {'line': b'  warnings.warn(msg)\n'}
+[0.576617] (gesture_cv) StdoutLine: {'line': b'running egg_info\n'}
+[0.582874] (gesture_cv) StdoutLine: {'line': b'creating ../build/gesture_cv/gesture_cv.egg-info\n'}
+[0.583218] (gesture_cv) StdoutLine: {'line': b'writing ../build/gesture_cv/gesture_cv.egg-info/PKG-INFO\n'}
+[0.583469] (gesture_cv) StdoutLine: {'line': b'writing dependency_links to ../build/gesture_cv/gesture_cv.egg-info/dependency_links.txt\n'}
+[0.583533] (gesture_cv) StdoutLine: {'line': b'writing requirements to ../build/gesture_cv/gesture_cv.egg-info/requires.txt\n'}
+[0.583585] (gesture_cv) StdoutLine: {'line': b'writing top-level names to ../build/gesture_cv/gesture_cv.egg-info/top_level.txt\n'}
+[0.583637] (gesture_cv) StdoutLine: {'line': b"writing manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'\n"}
+[0.590117] (gesture_cv) StdoutLine: {'line': b"reading manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'\n"}
+[0.590749] (gesture_cv) StdoutLine: {'line': b"writing manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'\n"}
+[0.590831] (gesture_cv) StdoutLine: {'line': b'running build\n'}
+[0.590880] (gesture_cv) StdoutLine: {'line': b'running install\n'}
+[0.593476] (gesture_cv) StdoutLine: {'line': b'running install_data\n'}
+[0.593583] (gesture_cv) StdoutLine: {'line': b'creating GestureDrone/install/gesture_cv/share/ament_index/resource_index/packages\n'}
+[0.593805] (gesture_cv) StderrLine: {'line': b"error: can't copy 'resource/gesture_cv': doesn't exist or not a regular file\n"}
+[0.600917] (-) TimerEvent: {}
+[0.607414] (gesture_cv) CommandEnded: {'returncode': 1}
+[0.608079] (gesture_cv) JobEnded: {'identifier': 'gesture_cv', 'rc': 1}
+[0.618116] (-) EventReactorShutdown: {}

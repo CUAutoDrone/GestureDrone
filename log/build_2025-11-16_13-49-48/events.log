@@ -1,0 +1,26 @@
+[0.000000] (-) TimerEvent: {}
+[0.000208] (gesture_cv) JobQueued: {'identifier': 'gesture_cv', 'dependencies': OrderedDict()}
+[0.000447] (gesture_cv) JobStarted: {'identifier': 'gesture_cv'}
+[0.099951] (-) TimerEvent: {}
+[0.200372] (-) TimerEvent: {}
+[0.300953] (-) TimerEvent: {}
+[0.379354] (gesture_cv) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../build/gesture_cv', 'build', '--build-base', 'GestureDrone/build/gesture_cv/build', 'install', '--record', 'GestureDrone/build/gesture_cv/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': 'GestureDrone/gesture_cv', 'env': ***REMOVED***, 'shell': False}
+[0.401029] (-) TimerEvent: {}
+[0.470921] (gesture_cv) StderrLine: {'line': b"site-packages/setuptools/_distutils/dist.py:261: UserWarning: Unknown distribution option: 'tests_require'\n"}
+[0.471097] (gesture_cv) StderrLine: {'line': b'  warnings.warn(msg)\n'}
+[0.501124] (-) TimerEvent: {}
+[0.511721] (gesture_cv) StdoutLine: {'line': b'running egg_info\n'}
+[0.517777] (gesture_cv) StdoutLine: {'line': b'writing ../build/gesture_cv/gesture_cv.egg-info/PKG-INFO\n'}
+[0.518227] (gesture_cv) StdoutLine: {'line': b'writing dependency_links to ../build/gesture_cv/gesture_cv.egg-info/dependency_links.txt\n'}
+[0.518420] (gesture_cv) StdoutLine: {'line': b'writing entry points to ../build/gesture_cv/gesture_cv.egg-info/entry_points.txt\n'}
+[0.518553] (gesture_cv) StdoutLine: {'line': b'writing requirements to ../build/gesture_cv/gesture_cv.egg-info/requires.txt\n'}
+[0.518709] (gesture_cv) StdoutLine: {'line': b'writing top-level names to ../build/gesture_cv/gesture_cv.egg-info/top_level.txt\n'}
+[0.525092] (gesture_cv) StdoutLine: {'line': b"reading manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'\n"}
+[0.525748] (gesture_cv) StdoutLine: {'line': b"writing manifest file '../build/gesture_cv/gesture_cv.egg-info/SOURCES.txt'\n"}
+[0.526012] (gesture_cv) StdoutLine: {'line': b'running build\n'}
+[0.526072] (gesture_cv) StdoutLine: {'line': b'running install\n'}
+[0.529387] (gesture_cv) StdoutLine: {'line': b'running install_data\n'}
+[0.529792] (gesture_cv) StderrLine: {'line': b"error: can't copy 'resource/gesture_cv': doesn't exist or not a regular file\n"}
+[0.556056] (gesture_cv) CommandEnded: {'returncode': 1}
+[0.556676] (gesture_cv) JobEnded: {'identifier': 'gesture_cv', 'rc': 1}
+[0.566357] (-) EventReactorShutdown: {}

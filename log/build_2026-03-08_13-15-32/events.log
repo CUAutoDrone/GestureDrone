@@ -1,0 +1,43 @@
+[0.000000] (-) TimerEvent: {}
+[0.000440] (-) JobUnselected: {'identifier': 'gesture_cv'}
+[0.000481] (gesture_to_flight) JobQueued: {'identifier': 'gesture_to_flight', 'dependencies': OrderedDict([('gesture_cv', 'GestureDrone/install/gesture_cv')])}
+[0.001068] (gesture_to_flight) JobStarted: {'identifier': 'gesture_to_flight'}
+[0.099990] (-) TimerEvent: {}
+[0.200332] (-) TimerEvent: {}
+[0.300586] (-) TimerEvent: {}
+[0.400823] (-) TimerEvent: {}
+[0.438262] (gesture_to_flight) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../build/gesture_to_flight', 'build', '--build-base', 'GestureDrone/build/gesture_to_flight/build', 'install', '--record', 'GestureDrone/build/gesture_to_flight/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': 'GestureDrone/gesture_to_flight', 'env': ***REMOVED***, 'shell': False}
+[0.500949] (-) TimerEvent: {}
+[0.575111] (gesture_to_flight) StdoutLine: {'line': b'running egg_info\n'}
+[0.582591] (gesture_to_flight) StdoutLine: {'line': b'writing ../build/gesture_to_flight/gesture_to_flight.egg-info/PKG-INFO\n'}
+[0.582874] (gesture_to_flight) StdoutLine: {'line': b'writing dependency_links to ../build/gesture_to_flight/gesture_to_flight.egg-info/dependency_links.txt\n'}
+[0.583132] (gesture_to_flight) StdoutLine: {'line': b'writing entry points to ../build/gesture_to_flight/gesture_to_flight.egg-info/entry_points.txt\n'}
+[0.583216] (gesture_to_flight) StdoutLine: {'line': b'writing requirements to ../build/gesture_to_flight/gesture_to_flight.egg-info/requires.txt\n'}
+[0.583290] (gesture_to_flight) StdoutLine: {'line': b'writing top-level names to ../build/gesture_to_flight/gesture_to_flight.egg-info/top_level.txt\n'}
+[0.599318] (gesture_to_flight) StdoutLine: {'line': b"reading manifest file '../build/gesture_to_flight/gesture_to_flight.egg-info/SOURCES.txt'\n"}
+[0.599960] (gesture_to_flight) StdoutLine: {'line': b"writing manifest file '../build/gesture_to_flight/gesture_to_flight.egg-info/SOURCES.txt'\n"}
+[0.600152] (gesture_to_flight) StdoutLine: {'line': b'running build\n'}
+[0.600240] (gesture_to_flight) StdoutLine: {'line': b'running build_py\n'}
+[0.600445] (gesture_to_flight) StdoutLine: {'line': b'copying gesture_to_flight/gesture_inference_ros_node.py -> GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight\n'}
+[0.600531] (gesture_to_flight) StdoutLine: {'line': b'copying gesture_to_flight/__init__.py -> GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight\n'}
+[0.600615] (gesture_to_flight) StdoutLine: {'line': b'copying gesture_to_flight/flightInstructions.py -> GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight\n'}
+[0.600758] (gesture_to_flight) StdoutLine: {'line': b'running install\n'}
+[0.600946] (-) TimerEvent: {}
+[0.603564] (gesture_to_flight) StdoutLine: {'line': b'running install_lib\n'}
+[0.611496] (gesture_to_flight) StdoutLine: {'line': b'copying GestureDrone/build/gesture_to_flight/build/lib/gesture_to_flight/gesture_inference_ros_node.py -> GestureDrone/install/gesture_to_flight/lib/python3.10/site-packages/gesture_to_flight\n'}
+[0.611830] (gesture_to_flight) StdoutLine: {'line': b'byte-compiling GestureDrone/install/gesture_to_flight/lib/python3.10/site-packages/gesture_to_flight/gesture_inference_ros_node.py to gesture_inference_ros_node.cpython-310.pyc\n'}
+[0.612841] (gesture_to_flight) StdoutLine: {'line': b'running install_data\n'}
+[0.612968] (gesture_to_flight) StdoutLine: {'line': b'copying resource/gesture_to_flight -> GestureDrone/install/gesture_to_flight/share/ament_index/resource_index/packages\n'}
+[0.613074] (gesture_to_flight) StdoutLine: {'line': b'copying package.xml -> GestureDrone/install/gesture_to_flight/share/gesture_to_flight\n'}
+[0.613199] (gesture_to_flight) StdoutLine: {'line': b'copying launch/gesture_drone.launch.py -> GestureDrone/install/gesture_to_flight/share/gesture_to_flight/launch\n'}
+[0.613255] (gesture_to_flight) StdoutLine: {'line': b'running install_egg_info\n'}
+[0.622370] (gesture_to_flight) StdoutLine: {'line': b"removing 'GestureDrone/install/gesture_to_flight/lib/python3.10/site-packages/gesture_to_flight-0.0.1-py3.10.egg-info' (and everything under it)\n"}
+[0.622531] (gesture_to_flight) StdoutLine: {'line': b'Copying ../build/gesture_to_flight/gesture_to_flight.egg-info to GestureDrone/install/gesture_to_flight/lib/python3.10/site-packages/gesture_to_flight-0.0.1-py3.10.egg-info\n'}
+[0.622743] (gesture_to_flight) StdoutLine: {'line': b'running install_scripts\n'}
+[0.689777] (gesture_to_flight) StdoutLine: {'line': b'Installing flight_controller script to GestureDrone/install/gesture_to_flight/bin\n'}
+[0.690008] (gesture_to_flight) StdoutLine: {'line': b'Installing gesture_inference script to GestureDrone/install/gesture_to_flight/bin\n'}
+[0.690257] (gesture_to_flight) StdoutLine: {'line': b"writing list of installed files to 'GestureDrone/build/gesture_to_flight/install.log'\n"}
+[0.701050] (-) TimerEvent: {}
+[0.707144] (gesture_to_flight) CommandEnded: {'returncode': 0}
+[0.714215] (gesture_to_flight) JobEnded: {'identifier': 'gesture_to_flight', 'rc': 0}
+[0.714734] (-) EventReactorShutdown: {}
