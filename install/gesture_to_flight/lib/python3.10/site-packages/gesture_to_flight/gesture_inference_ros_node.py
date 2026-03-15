@@ -17,6 +17,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 
+import mediapipe as mp
+
 
 # -------------------------
 # Paths
@@ -78,67 +80,6 @@ COMMAND_MAP = {
 }
 
 
-class SimpleHandDetector:
-    """Simple hand detector using skin color and contour detection"""
-    
-    def __init__(self):
-        # HSV skin color range (approximate for various skin tones)
-        self.lower_skin = np.array([0, 20, 70], dtype=np.uint8)
-        self.upper_skin = np.array([20, 255, 255], dtype=np.uint8)
-        
-    def detect_hand(self, frame):
-        """Detect hand in frame using skin color"""
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-        mask = cv2.inRange(hsv, self.lower_skin, self.upper_skin)
-        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15)))
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (10, 10)))
-        
-        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        
-        if not contours:
-            return None, None
-        
-        # Get largest contour (likely the hand)
-        hand_contour = max(contours, key=cv2.contourArea)
-        
-        if cv2.contourArea(hand_contour) < 500:
-            return None, None
-        
-        # Create fake landmarks from contour for compatibility
-        # Extract fingertip and palm positions
-        M = cv2.moments(hand_contour)
-        if M["m00"] > 0:
-            cx = int(M["m10"] / M["m00"])
-            cy = int(M["m01"] / M["m00"])
-        else:
-            return None, None
-        
-        h, w = frame.shape[:2]
-        
-        # Generate 21 fake landmarks roughly in hand region
-        landmarks = []
-        for i in range(21):
-            # Add some random offset to make it less perfect
-            offset_x = np.random.randint(-30, 30)
-            offset_y = np.random.randint(-30, 30)
-            x = (cx + offset_x) / w
-            y = (cy + offset_y) / h
-            z = 0.1
-            x = np.clip(x, 0, 1)
-            y = np.clip(y, 0, 1)
-            landmarks.append([x, y, z])
-        
-        landmarks = np.array(landmarks, dtype=np.float32).flatten()
-        
-        return landmarks, hand_contour
-    
-    def draw_contour(self, frame, contour):
-        """Draw hand contour on frame"""
-        if contour is not None:
-            cv2.drawContours(frame, [contour], 0, (0, 255, 0), 2)
-        return frame
-
-
 class GestureInferenceNode(Node):
     def __init__(self):
         super().__init__('gesture_inference')
@@ -156,8 +97,13 @@ class GestureInferenceNode(Node):
             self.get_logger().error(f"Failed to load model: {e}")
             raise
         
-        # Simple hand detector
-        self.detector = SimpleHandDetector()
+        # MediaPipe hand detector
+        self.hands = mp.solutions.hands.Hands(
+            max_num_hands=1,
+            min_detection_confidence=0.7,
+            min_tracking_confidence=0.7
+        )
+        self.mp_drawing = mp.solutions.drawing_utils
         
         # Camera setup
         self.cap = cv2.VideoCapture(0)
@@ -189,47 +135,55 @@ class GestureInferenceNode(Node):
         
         # Flip for mirror view
         frame = cv2.flip(frame, 1)
-        h, w = frame.shape[:2]
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = self.hands.process(rgb)
         
         gesture_label = "NO_HAND"
         command_text = ""
         
-        # Detect hand
-        landmarks, hand_contour = self.detector.detect_hand(frame)
-        
-        if landmarks is not None:
-            # Torch inference
-            with torch.no_grad():
-                x = torch.from_numpy(landmarks).unsqueeze(0)  # (1, 63)
-                logits = self.model(x)
-                probs = torch.softmax(logits, dim=1)
-                pred_idx = int(torch.argmax(probs, dim=1).item())
-                gesture_label = LABELS[pred_idx]
-            
-            # Update history for smoothing
-            self.pred_history.append(gesture_label)
-            if len(self.pred_history) > self.PRED_HISTORY_LEN:
-                self.pred_history.pop(0)
-            
-            # Majority vote over history
-            stable_prediction = max(
-                set(self.pred_history),
-                key=self.pred_history.count
-            )
-            
-            # Map to command
-            command_text = COMMAND_MAP.get(stable_prediction, "UNKNOWN")
-            
-            # Only publish if command changed
-            if command_text != self.last_command and command_text != "UNKNOWN":
-                self.get_logger().info(f"🚁 COMMAND: {command_text} (Gesture: {stable_prediction})")
-                msg = String()
-                msg.data = command_text
-                self.cmd_pub.publish(msg)
-                self.last_command = command_text
-            
-            # Draw hand on frame
-            frame = self.detector.draw_contour(frame, hand_contour)
+        if results.multi_hand_landmarks:
+            for hand_landmarks in results.multi_hand_landmarks:
+                self.mp_drawing.draw_landmarks(
+                    frame, hand_landmarks, mp.solutions.hands.HAND_CONNECTIONS
+                )
+                
+                # Extract 21 * 3 = 63 normalized landmarks
+                landmarks = np.array(
+                    [[lm.x, lm.y, lm.z] for lm in hand_landmarks.landmark],
+                    dtype=np.float32
+                ).flatten()  # (63,)
+                
+                # Torch inference
+                with torch.no_grad():
+                    x = torch.from_numpy(landmarks).unsqueeze(0)  # (1, 63)
+                    logits = self.model(x)
+                    probs = torch.softmax(logits, dim=1)
+                    pred_idx = int(torch.argmax(probs, dim=1).item())
+                    gesture_label = LABELS[pred_idx]
+                
+                # Update history for smoothing
+                self.pred_history.append(gesture_label)
+                if len(self.pred_history) > self.PRED_HISTORY_LEN:
+                    self.pred_history.pop(0)
+                
+                # Majority vote over history
+                stable_prediction = max(
+                    set(self.pred_history),
+                    key=self.pred_history.count
+                )
+                
+                # Map to command
+                command_text = COMMAND_MAP.get(stable_prediction, "UNKNOWN")
+                
+                # Only publish if command changed
+                if command_text != self.last_command and command_text != "UNKNOWN":
+                    self.get_logger().info(f"🚁 COMMAND: {command_text} (Gesture: {stable_prediction})")
+                    msg = String()
+                    msg.data = command_text
+                    self.cmd_pub.publish(msg)
+                    self.last_command = command_text
+                
+                break  # only first hand
 
         # Overlay text on frame
         cv2.putText(
@@ -264,6 +218,7 @@ class GestureInferenceNode(Node):
         """Cleanup resources"""
         self.cap.release()
         cv2.destroyAllWindows()
+        self.hands.close()
         super().destroy_node()
 
 
