@@ -1,5 +1,3 @@
-# use: python process_gesture_data_command4.py
-#
 # Reads raw landmark CSV from GestureData_Command4.py
 # Applies:
 # - wrist-centering
