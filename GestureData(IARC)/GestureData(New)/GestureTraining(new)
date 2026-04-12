@@ -1,0 +1,179 @@
+# python "GestureTraining(new)"
+
+import csv
+import json
+import os
+
+import numpy as np
+import torch
+import torch.nn as nn
+from torch.utils.data import TensorDataset, DataLoader
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+CSV_PATH = os.path.join(BASE_DIR, "gesture_data_command4_processed.csv")
+MODEL_PATH = os.path.join(BASE_DIR, "gesture_command4_classifier.pt")
+LABEL_MAP_PATH = os.path.join(BASE_DIR, "gesture_command4_label_map.json")
+MODEL_META_PATH = os.path.join(BASE_DIR, "gesture_command4_model_meta.json")
+
+# -------------------------
+# Load processed CSV
+# -------------------------
+Xs = []
+ys = []
+
+with open(CSV_PATH, "r") as f:
+    reader = csv.reader(f)
+    header = next(reader)
+
+    for row in reader:
+        *features, label = row
+        Xs.append([float(v) for v in features])
+        ys.append(label)
+
+X = np.asarray(Xs, dtype=np.float32)
+y_text = np.asarray(ys)
+
+if len(X) == 0:
+    raise ValueError("No samples found in processed CSV.")
+
+# -------------------------
+# Label encoding (manual)
+# -------------------------
+labels = sorted(set(y_text.tolist()))
+label_to_idx = {label: i for i, label in enumerate(labels)}
+idx_to_label = {i: label for label, i in label_to_idx.items()}
+
+y = np.array([label_to_idx[label] for label in y_text], dtype=np.int64)
+
+input_dim = X.shape[1]
+num_classes = len(labels)
+
+print(f"Loaded {len(X)} samples")
+print(f"Input dim: {input_dim}")
+print(f"Classes: {labels}")
+
+with open(LABEL_MAP_PATH, "w") as f:
+    json.dump(idx_to_label, f, indent=2)
+
+with open(MODEL_META_PATH, "w") as f:
+    json.dump(
+        {
+            "input_dim": input_dim,
+            "num_classes": num_classes,
+            "labels": labels
+        },
+        f,
+        indent=2
+    )
+
+print(f"Saved label map to {LABEL_MAP_PATH}")
+print(f"Saved model metadata to {MODEL_META_PATH}")
+
+# -------------------------
+# Train/val split
+# -------------------------
+rng = np.random.default_rng(seed=42)
+indices = np.arange(len(X))
+rng.shuffle(indices)
+
+split_idx = int(0.8 * len(X))
+train_idx = indices[:split_idx]
+val_idx = indices[split_idx:]
+
+X_train = torch.tensor(X[train_idx], dtype=torch.float32)
+y_train = torch.tensor(y[train_idx], dtype=torch.long)
+
+X_val = torch.tensor(X[val_idx], dtype=torch.float32)
+y_val = torch.tensor(y[val_idx], dtype=torch.long)
+
+train_ds = TensorDataset(X_train, y_train)
+val_ds = TensorDataset(X_val, y_val)
+
+train_loader = DataLoader(train_ds, batch_size=32, shuffle=True)
+val_loader = DataLoader(val_ds, batch_size=64, shuffle=False)
+
+# -------------------------
+# Model
+# -------------------------
+class GestureNet(nn.Module):
+    def __init__(self, input_dim, num_classes):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(input_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, num_classes)
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+
+model = GestureNet(input_dim=input_dim, num_classes=num_classes)
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+
+# -------------------------
+# Eval helper
+# -------------------------
+def evaluate(loader):
+    model.eval()
+    correct = 0
+    total = 0
+
+    with torch.no_grad():
+        for xb, yb in loader:
+            logits = model(xb)
+            preds = torch.argmax(logits, dim=1)
+            correct += (preds == yb).sum().item()
+            total += yb.numel()
+
+    model.train()
+    return correct / max(total, 1)
+
+# -------------------------
+# Train
+# -------------------------
+EPOCHS = 40
+
+for epoch in range(1, EPOCHS + 1):
+    running_loss = 0.0
+
+    for xb, yb in train_loader:
+        optimizer.zero_grad()
+        logits = model(xb)
+        loss = criterion(logits, yb)
+        loss.backward()
+        optimizer.step()
+        running_loss += loss.item() * xb.size(0)
+
+    train_loss = running_loss / len(train_ds)
+    val_acc = evaluate(val_loader)
+
+    print(f"Epoch {epoch:02d}/{EPOCHS} | loss={train_loss:.4f} | val_acc={val_acc:.4f}")
+
+# -------------------------
+# Final val predictions
+# -------------------------
+model.eval()
+all_preds = []
+all_true = []
+
+with torch.no_grad():
+    for xb, yb in val_loader:
+        logits = model(xb)
+        preds = torch.argmax(logits, dim=1)
+        all_preds.extend(preds.cpu().numpy().tolist())
+        all_true.extend(yb.cpu().numpy().tolist())
+
+print("\nValidation samples:")
+for true_i, pred_i in zip(all_true[:20], all_preds[:20]):
+    print(f"true={idx_to_label[true_i]:<15} pred={idx_to_label[pred_i]}")
+
+# -------------------------
+# Save model
+# -------------------------
+torch.save(model.state_dict(), MODEL_PATH)
+print(f"\nSaved model to {MODEL_PATH}")

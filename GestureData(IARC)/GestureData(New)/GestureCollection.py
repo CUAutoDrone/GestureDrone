@@ -45,7 +45,7 @@ python -c "import cv2, mediapipe, numpy; print('cv2 OK'); print('mediapipe OK');
 # Quick sanity check before trying to run the scripts.
 
 # 11) Move into the IARC data collection folder
-cd "GestureData(IARC)/Data_IARC_Collection"
+cd "GestureData(IARC)/GestureData(New)"
 # This folder contains Gesture_IARC.py, DataProcessing.py, and hand_landmarker.task.
 
 # 12) Confirm the model file is present
@@ -53,20 +53,20 @@ ls -lh hand_landmarker.task
 # The MediaPipe Tasks API needs this file in the same folder as Gesture_IARC.py.
 
 # 13) Run the raw data collection script
-python Gesture_IARC.py
+python GestureCollection.py
 # Starts the webcam-based gesture collection pipeline.
 """
 
 # Collect raw landmark data for 4 command gestures:
-# 1. Arm_Drone
-# 2. Takeoff
-# 3. Start_Search
-# 4. Land
+# ALL LEFT HAND (Collection labeled right)
+# 1. Arm_Drone // ✋
+# 2. Takeoff // 👍
+# 3. Start_Search // ✌️
+# 4. Land //  Flat hand down (flipped Arm Drone)
 
 import csv
 import os
 import time
-
 import cv2
 import numpy as np
 import mediapipe as mp

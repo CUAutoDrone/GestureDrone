@@ -11,7 +11,6 @@ import torch.nn as nn
 
 #get into GestureTraining/ and run python3 GestureInference.py
 
-
 # -------------------------
 # Paths
 # -------------------------

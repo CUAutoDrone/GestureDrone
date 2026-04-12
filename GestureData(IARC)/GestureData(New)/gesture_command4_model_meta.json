@@ -1,0 +1,10 @@
+{
+  "input_dim": 166,
+  "num_classes": 4,
+  "labels": [
+    "Arm_Drone",
+    "Land",
+    "Start_Search",
+    "Takeoff"
+  ]
+}
